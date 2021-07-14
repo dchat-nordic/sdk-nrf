@@ -1,0 +1,66 @@
+#
+# Copyright (c) 2021 Nordic Semiconductor ASA
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+DT_CHOSEN_Z_IPC_SHM := zephyr,ipc_shm
+
+menuconfig SHM_MGR_LITE
+	bool "Shared Memory Manager Lite"
+	depends on SOC_NRF5340_CPUAPP || SOC_NRF5340_CPUNET
+	help
+	  Enable Shared memory manager for IPC
+
+if SHM_MGR_LITE
+
+config SHM_MGR_LITE_SHM_SIZE
+	hex
+	default "$(dt_chosen_reg_size_hex,$(DT_CHOSEN_Z_IPC_SHM))"
+	help
+	  This option specifies size of the memory region to be used
+	  by Shared Memory Manager Lite
+
+config SHM_MGR_LITE_BASE_ADDRESS
+	hex
+	default "$(dt_chosen_reg_addr_hex,$(DT_CHOSEN_Z_IPC_SHM))"
+	help
+	  This option specifies base address of the memory region to
+	  be used by Shared Memory Manager Lite
+
+config SHM_MGR_LITE_CORE_COUNT
+	int
+	default 2
+	help
+	  This number specifies by how shared memory is divided.
+
+config SHM_MGR_LITE_CORE_ID
+	int
+	help
+	  This option specifies current core ID.
+
+config SHM_MGR_LITE_CHANNEL_COUNT
+	int "Communication channel count"
+	default 16
+	help
+	  This option specifies how many communication channels 
+	  are to be set up.
+
+if SOC_NRF5340_CPUAPP
+
+config SHM_MGR_LITE_CORE_ID
+	default 0
+	
+endif # SOC_NRF5340_CPUAPP
+
+if SOC_NRF5340_CPUNET
+
+config SHM_MGR_LITE_CORE_ID
+	default 1
+
+endif # SOC_NRF5340_CPUNET
+
+module = SHM_MGR_LITE
+module-str = shr_mgr_lite
+source "${ZEPHYR_BASE}/subsys/logging/Kconfig.template.log_config"
+
+endif # SHM_MGR_LITE
