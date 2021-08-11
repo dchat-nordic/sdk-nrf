@@ -16,3 +16,15 @@ endif # SM_IPT
 
 endmenu
 
+if IPC_SERVICE
+
+choice IPC_SERVICE_BACKEND
+	prompt "IPC Service backend"
+
+config IPC_SERVICE_BACKEND_SM_IPT
+	bool "SM_IPT backend"
+	select SM_IPT
+
+endchoice
+
+endif # IPC_SERVICE

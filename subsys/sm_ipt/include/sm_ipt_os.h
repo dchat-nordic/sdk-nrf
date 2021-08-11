@@ -22,6 +22,7 @@
 extern "C" {
 #endif
 
+
 struct sm_ipt_os_ctx{
 	void *out_shmem_ptr;
 	void *in_shmem_ptr;
@@ -30,6 +31,8 @@ struct sm_ipt_os_ctx{
 	void (*signal_handler)(struct sm_ipt_os_ctx *);
 	const struct device *ipm_tx_handle;
 };
+
+#define SM_IPT_ASSERT(_expr) __ASSERT(_expr, "SM IPT assertion failed")
 
 #define SM_IPT_OS_MEMORY_BARIER() __DSB()
 
