@@ -8,28 +8,21 @@
 #include <sys/reboot.h>
 
 #include <nfc_t2t_lib.h>
-#include <nfc/ndef/msg.h>
 #include <nfc/ndef/launchapp_msg.h>
-
 #include <dk_buttons_and_leds.h>
+
 
 #define MAX_REC_COUNT		3
 #define NDEF_MSG_BUF_SIZE	256
 
 #define NFC_FIELD_LED		DK_LED1
 
-/** @snippet [NFC Launch App usage_0] */
+
 /* nRF Toolbox Android application package name */
 static const uint8_t m_android_package_name[] = {'n', 'o', '.', 'n', 'o', 'r', 'd', 'i', 'c', 's',
                                                  'e', 'm', 'i', '.', 'a', 'n', 'd', 'r', 'o', 'i',
                                                  'd', '.', 'n', 'r', 'f', 't', 'o', 'o', 'l', 'b',
                                                  'o', 'x'};
-
-/* nRF Toolbox application ID for Windows phone */
-static const uint8_t m_windows_application_id[] = {'{', 'e', '1', '2', 'd', '2', 'd', 'a', '7', '-',
-                                                   '4', '8', '8', '5', '-', '4', '0', '0', 'f', '-',
-                                                   'b', 'c', 'd', '4', '-', '6', 'c', 'b', 'd', '5',
-                                                   'b', '8', 'c', 'f', '6', '2', 'c', '}'};
 
 /* Buffer used to hold an NFC NDEF message. */
 static uint8_t ndef_msg_buf[NDEF_MSG_BUF_SIZE];
@@ -60,7 +53,7 @@ int main(void)
 {
 	uint32_t len = sizeof(ndef_msg_buf);
 
-	printk("Starting NFC LaunchApp example\n");
+	printk("Starting NFC Launch app example\n");
 
 	/* Configure LED-pins as outputs */
 	if (dk_leds_init() < 0) {
@@ -75,11 +68,9 @@ int main(void)
 	}
 
 
-	/* Encode welcome message */
+	/* Encode launch app data  */
 	if (nfc_launchapp_msg_encode(m_android_package_name,
                                             sizeof(m_android_package_name),
-                                            m_windows_application_id,
-                                            sizeof(m_windows_application_id),
                                             ndef_msg_buf,
                                             &len) < 0) {
 		printk("Cannot encode message!\n");
@@ -99,8 +90,8 @@ int main(void)
 		printk("Cannot start emulation!\n");
 		goto fail;
 	}
-	printk("NFC configuration done\n");
 
+	printk("NFC configuration done\n");
 	return 0;
 
 fail:

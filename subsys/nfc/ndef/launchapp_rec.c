@@ -38,10 +38,10 @@
  *
  */
 
-#include "nfc/ndef/launchapp_rec.h"
 #include <string.h>
 #include <errno.h>
-//#include "app_util.h"
+
+#include "nfc/ndef/launchapp_rec.h"
 #include "nfc/ndef/record.h"
 
 /* Record Payload Type for NFC NDEF Android Application Record */
@@ -49,55 +49,3 @@ const uint8_t ndef_android_launchapp_rec_type[] =
 {
     'a', 'n', 'd', 'r', 'o', 'i', 'd', '.', 'c','o', 'm', ':', 'p', 'k', 'g'
 };
-
-/* Record Payload Type for NFC NDEF Windows LaunchApp record */
-const uint8_t ndef_windows_launchapp_rec_type[] =
-{
-    'w', 'i', 'n', 'd', 'o', 'w', 's', '.', 'c', 'o', 'm', '/', 'L', 'a', 'u',
-    'n', 'c', 'h', 'A', 'p', 'p'
-};
-/* Platform type used in Record Payload of NFC NDEF Windows LaunchApp record */
-const uint8_t ndef_windows_launchapp_plat_type[] =
-{
-    'W', 'i', 'n', 'd', 'o', 'w', 's', 'P', 'h', 'o', 'n', 'e'
-};
-
-#define WIN_LAUNCHAPP_EMPTY_PARAMETER 0x20 ///< The empty parameter value for the Windows LaunchApp Record.
-
-int nfc_win_launchapp_payload_constructor(win_launchapp_payload_desc_t * p_input,
-                                                 uint8_t                      * p_buff,
-                                                 uint32_t                     * p_len)
-{
-
-    win_launchapp_payload_desc_t * launch_desc = (win_launchapp_payload_desc_t *) p_input;
-
-    uint32_t temp_len = (uint32_t)launch_desc->platform_length + launch_desc->app_id_length + 7;
-
-    if (p_buff != NULL)
-    {
-        if (temp_len > *p_len)
-        {
-            return -ENOMEM;
-        }
-
-        *p_buff++ = 0x00; // platform count: 1
-        *p_buff++ = 0x01; // -||-
-
-        *p_buff++ = launch_desc->platform_length;
-        memcpy(p_buff, launch_desc->platform, launch_desc->platform_length); // platform
-        p_buff += launch_desc->platform_length;
-
-
-        *p_buff++ = launch_desc->app_id_length;
-        memcpy(p_buff, launch_desc->app_id, launch_desc->app_id_length);
-        p_buff += launch_desc->app_id_length;
-
-        *p_buff++ = 0x00; // parameters length 1B
-        *p_buff++ = 0x01; // -||-
-        *p_buff++ = WIN_LAUNCHAPP_EMPTY_PARAMETER; // empty parameter
-    }
-
-    *p_len = temp_len;
-
-    return 0;
-}
