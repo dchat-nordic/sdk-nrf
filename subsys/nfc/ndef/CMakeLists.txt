@@ -20,3 +20,6 @@ zephyr_library_sources_ifdef(CONFIG_NFC_NDEF_PAYLOAD_TYPE_COMMON payload_type_co
 zephyr_library_sources_ifdef(CONFIG_NFC_NDEF_PARSER record_parser.c)
 zephyr_library_sources_ifdef(CONFIG_NFC_NDEF_TNEP_RECORD tnep_rec.c)
 zephyr_library_sources_ifdef(CONFIG_NFC_NDEF_CH_PARSER ch_rec_parser.c)
+
+zephyr_library_sources_ifdef(CONFIG_NFC_NDEF_LAUNCHAPP launchapp_msg.c)
+zephyr_library_sources_ifdef(CONFIG_NFC_NDEF_LAUNCHAPP launchapp_rec.c)

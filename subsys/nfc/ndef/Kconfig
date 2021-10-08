@@ -63,6 +63,11 @@ config NFC_NDEF_CH_REC
 	help
 	  Enable NDEF Connection Handover records generator library
 
+config NFC_NDEF_LAUNCHAPP
+	bool "NDEF Launch App library"
+	help
+	  Enable NDEF Launch App library
+
 config NDEF_FILE_SIZE
 	int
 	prompt "NDEF file maximal size"
