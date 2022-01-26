@@ -33,6 +33,8 @@ manifest:
       url-base: https://github.com/memfault
     - name: ant-nrfconnect
       url-base: https://github.com/ant-nrfconnect
+    - name: dchat
+      url-base: https://github.com/dchat-nordic
 
   # If not otherwise specified, the projects below should be obtained
   # from the ncs remote.
@@ -114,9 +116,10 @@ manifest:
       repo-path: sdk-mbedtls
       revision: d540e87d63c1bf51856a88657c58abc021c7ad8f
     - name: nrfxlib
+      remote: dchat
       repo-path: sdk-nrfxlib
       path: nrfxlib
-      revision: 688cdced97ff20d507def2d17d42d20654968758
+      revision: 3a7fe0415cd846f4b5aa5b4c2c79e05888d09a7e
     - name: trusted-firmware-m
       repo-path: sdk-trusted-firmware-m
       path: modules/tee/tf-m/trusted-firmware-m
